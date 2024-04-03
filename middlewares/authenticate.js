@@ -7,7 +7,7 @@ module.exports = async (req, res, next) => {
     const bearerToken = req.headers.authorization;
 
     if (!bearerToken) {
-      return next(new ApiError("token nya gak ada", 401));
+      return next(new ApiError("Token not found!", 401));
     }
 
     const token = bearerToken.split("Bearer ")[1];
