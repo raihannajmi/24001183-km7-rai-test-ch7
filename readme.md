@@ -1,3 +1,5 @@
+**LUPAAAA : NAMA REPO PROJECT PER TIM NYA YG CANTIK SESUAI APLIKASI YANG DIKERJAKANNYA YAH!!!**
+
 requirement mini final project backend :
 1. REST API => CRUD, tapi gak cuman : contoh register, login, /me => check token ini punya siapa.
 2. Dashboard dan fungsi API nya => CRUD setiap resource, ada filter dan search, implementasi pagination. Sidebar/navbar => tiap orang 1 menu/resources **OPTIONAL**
