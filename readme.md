@@ -1,4 +1,5 @@
 **LUPAAAA : NAMA REPO PROJECT PER TIM NYA YG CANTIK SESUAI APLIKASI YANG DIKERJAKANNYA YAH!!!**
+contoh : team10-API-perpustakaan
 
 requirement mini final project backend :
 1. REST API => CRUD, tapi gak cuman : contoh register, login, /me => check token ini punya siapa.
@@ -30,6 +31,7 @@ requirement mini final project backend :
 15. implementasi VERIFY USER dengan token/link verifikasi dari email yang dikirim saat user di create **PELAJARI SENDIRI** **OPTIONAL BANGET!!!**
 16. database diagram dan readme markdown dibikin sejelas dan secantik mungkin.
 17. MAIN PULL REQUEST dan COMMIT MESSAGE SEBAIK MUNGKIN => terutama lead nya.
+18. naming VARIABLE/FUNCTION/KOLOM TABLE dan lainnya konsisten bahasa inggris, bahkan error dan sukses message bahasa inggris
 
     notes :
     optional => level 1 (boleh kalau MVP nya udah)
