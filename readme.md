@@ -53,7 +53,7 @@ yang dapat dilakukan aplikasi :
 - .....
 
 berikut database diagram nya :
-![My Image](/public/img/db-diagram.png)
+![My Image](/public/img/db-diagram-v2.jpg)
 
 Yang bisa dikembangkan kedepannya
 
