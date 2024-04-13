@@ -32,6 +32,7 @@ requirement mini final project backend :
 16. database diagram dan readme markdown dibikin sejelas dan secantik mungkin.
 17. MAIN PULL REQUEST dan COMMIT MESSAGE SEBAIK MUNGKIN => terutama lead nya.
 18. naming VARIABLE/FUNCTION/KOLOM TABLE dan lainnya konsisten bahasa inggris, bahkan error dan sukses message bahasa inggris
+19. Postman collection attach di readme ini
 
     notes :
     optional => level 1 (boleh kalau MVP nya udah)
