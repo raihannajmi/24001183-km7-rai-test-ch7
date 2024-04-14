@@ -19,9 +19,16 @@ module.exports = (sequelize, DataTypes) => {
   }
   Auth.init(
     {
-      email: DataTypes.STRING,
+      email: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          isEmail: {
+            msg: "Please enter a valid email",
+          },
+        },
+      },
       password: DataTypes.STRING,
-      cofirmPassword: DataTypes.STRING,
       userId: DataTypes.INTEGER,
     },
     {

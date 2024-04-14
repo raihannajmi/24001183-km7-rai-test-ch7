@@ -27,6 +27,17 @@ module.exports = (sequelize, DataTypes) => {
       name: DataTypes.STRING,
     },
     {
+      city: {
+        type: DataTypes.STRING,
+        validate: {
+          isIn: {
+            args: [["Bandung", "Jakarta", "Surabaya", "Bali"]],
+            msg: "Shop not exist in that city",
+          },
+        },
+      },
+    },
+    {
       sequelize,
       modelName: "Shop",
     }

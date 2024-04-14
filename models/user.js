@@ -36,7 +36,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.ENUM(["Admin", "Manager", "Staff"]),
         defaultValue: "Staff",
       },
-      address: DataTypes.STRING,
+      city: DataTypes.STRING,
       imageUrl: {
         type: DataTypes.TEXT,
         defaultValue:

@@ -19,3 +19,7 @@ sequelize model:generate --name transactionDetails --attributes customer_number:
 // configurasi npm dan database koneksi
 8. configurasi package.json, spt script dev : nodemon index.js, dll.
 9. configurasi database.js di folder config untuk database connection dari sequelize nya (sequelizerc buat configure settingan sequelize-cli)
+
+// for generate seeder file
+npx sequelize-cli seed:generate --name demo-user
+

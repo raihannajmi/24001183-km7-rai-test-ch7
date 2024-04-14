@@ -18,7 +18,7 @@ module.exports = {
       age: {
         type: Sequelize.INTEGER,
       },
-      address: {
+      city: {
         type: Sequelize.STRING,
       },
       imageUrl: {
