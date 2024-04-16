@@ -1,5 +1,6 @@
 "use strict";
 const { Model } = require("sequelize");
+
 module.exports = (sequelize, DataTypes) => {
   class Shop extends Model {
     /**
@@ -25,14 +26,12 @@ module.exports = (sequelize, DataTypes) => {
   Shop.init(
     {
       name: DataTypes.STRING,
-    },
-    {
       city: {
         type: DataTypes.STRING,
         validate: {
           isIn: {
             args: [["Bandung", "Jakarta", "Surabaya", "Bali"]],
-            msg: "Shop not exist in that city",
+            msg: "Shop does not exist in that city",
           },
         },
       },
