@@ -137,10 +137,14 @@ const findProductById = async (req, res, next) => {
       },
     });
 
-    if (product.shopId !== req.user.shopId) {
+    if (!product) {
       return next(
-        new ApiError("KAMU BUKAN DARI TOKO PEMILIK PRODUK TERSEBUT !!!!", 400)
+        new ApiError(`product with this ${req.params.id} is not exist`, 404)
       );
+    }
+
+    if (product.shopId !== req.user.shopId) {
+      return next(new ApiError("Your shop is not owner of this product", 401));
     }
 
     res.status(200).json({
