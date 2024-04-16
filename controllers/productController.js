@@ -27,13 +27,28 @@ const createProduct = async (req, res, next) => {
       );
     }
 
+    let shopId;
+    if (req.user.role === "Admin") {
+      if (!req.body.shopId) {
+        return next(
+          new ApiError(
+            "The 'shopId' field is required to create a product. Please provide the 'shopId' in the request body.",
+            400
+          )
+        );
+      }
+      shopId = req.body.shopId;
+    } else {
+      shopId = req.user.shopId;
+    }
+
     const newProduct = await Product.create({
       name,
       price,
       stock,
       imageUrl: images,
       userId: req.user.id,
-      shopId: req.user.shopId,
+      shopId,
     });
 
     res.status(200).json({
@@ -49,9 +64,9 @@ const createProduct = async (req, res, next) => {
 
 const findProducts = async (req, res, next) => {
   try {
-    const { productname, username, shop, page, limit } = req.query;
+    const { productName, username, shop, page, limit } = req.query;
     const condition = {};
-    if (productname) condition.name = { [Op.iLike]: `%${productname}%` };
+    if (productName) condition.name = { [Op.iLike]: `%${productName}%` };
 
     const includeShopCondition = {};
     if (shop) includeShopCondition.name = { [Op.iLike]: `%${shop}%` };
