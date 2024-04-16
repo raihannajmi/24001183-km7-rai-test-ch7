@@ -61,3 +61,7 @@ Yang bisa dikembangkan kedepannya
 - aplikasi dapat dikembangkan menjadi toko per branch, bukan lagi toko per kota
 - .....
 - .....
+
+### API DOCUMENTATION
+
+- [API DOCUMENTATION](https://elements.getpostman.com/redirect?entityId=11108135-50c362f5-36e0-41cf-96fa-ad73f62ab58b&entityType=collection)
