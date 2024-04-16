@@ -4,35 +4,6 @@ const imagekit = require("../lib/imagekit");
 const ApiError = require("../utils/apiError");
 const { Op } = require("sequelize");
 
-const multerStorage = multer.diskStorage({
-  destination: (req, res, cb) => {
-    cb("null", "public/img/products");
-  },
-  filename: (req, res, cb) => {
-    const ext = file.mimetype.split("/")[1];
-    cb(null, `products-${req.body.name}.${ext}`);
-  },
-});
-
-const multerFilter = (req, file, cb) => {
-  if (
-    file.mimetype == "image/png" ||
-    file.mimetype == "image/jpg" ||
-    file.mimetype == "image/jpeg"
-  ) {
-    cb(null, true);
-  } else {
-    return cb(new ApiError("Format Image nya salah", 400));
-  }
-};
-
-const upload = multer({
-  storage: multerStorage,
-  fileFilter: multerFilter,
-});
-
-exports.uploadProductPhoto = upload.single("photo");
-
 const createProduct = async (req, res, next) => {
   const { name, price, stock } = req.body;
   const files = req.files;
@@ -92,32 +63,46 @@ const findProducts = async (req, res, next) => {
     const pageSize = parseInt(limit) || 10;
     const offset = (pageNum - 1) * pageSize;
 
+    let whereCondition = condition;
+
+    if (req.user.role === "Admin") {
+      whereCondition;
+    } else {
+      whereCondition = {
+        ...condition,
+        shopId: req.user.shopId,
+      };
+    }
+
+    const totalCount = await Product.count({ where: whereCondition });
+
     const products = await Product.findAll({
       include: [
         {
           model: Shop,
           where: includeShopCondition,
-          attributes: ["name"],
+          attributes: ["id", "name"],
         },
         {
           model: User,
           attributes: ["name"],
         },
       ],
-      where: condition,
+      where: whereCondition,
       order: [["id", "ASC"]],
       attributes: ["name", "price", "stock", "createdAt", "updatedAt"],
       limit: pageSize,
       offset: offset,
     });
 
-    const totalPages = Math.ceil(products.length / pageSize);
+    const totalPages = Math.ceil(totalCount / pageSize);
 
     res.status(200).json({
       status: "Success",
       data: {
         products,
         pagination: {
+          totalData: totalCount,
           totalPages,
           pageNum,
           pageSize,
@@ -136,8 +121,6 @@ const findProductById = async (req, res, next) => {
         id: req.params.id,
       },
     });
-
-    console.log(req.user);
 
     if (product.shopId !== req.user.shopId) {
       return next(
