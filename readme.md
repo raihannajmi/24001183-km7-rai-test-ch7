@@ -49,9 +49,13 @@ Aplikasi ini untuk kantor pusat, melakukan manajerial toko per kota....
 
 yang dapat dilakukan aplikasi :
 
-- CRUD produk sesuai ...
-- .....
-- .....
+- Authentikasi setiap akses API hanya bisa dilakukan oleh logged in user, bahkan di register
+- Create Product yang hanya bisa dilakukan oleh Admin atau Manager
+- Admin bisa mengurus semua toko, product dan user
+- Produk hanya bisa di create oleh Manager sesuai kepemilikan toko nya
+- Produk data dapat di filter dinamis per nama produk, nama user yang input produk nya, nama toko. Lalu dapat di limit get data nya serta terdapat pagination.
+- Produk data otomatis akan bisa diambil semua data jika role nya admin, jika bukan, data produk nya hanya bisa sesuai toko user/manager nya bekerja.
+- .......
 
 berikut database diagram nya :
 ![My Image](/public/img/db-diagram-v2.jpg)
@@ -59,8 +63,9 @@ berikut database diagram nya :
 Yang bisa dikembangkan kedepannya
 
 - aplikasi dapat dikembangkan menjadi toko per branch, bukan lagi toko per kota
-- .....
-- .....
+- aplikasi bisa dibuat manager mengelola beberapa toko
+- aplikasi bisa dibuat manager bisa melakukan register karyawan sesuai toko nya.
+- .......
 
 ### API DOCUMENTATION
 
