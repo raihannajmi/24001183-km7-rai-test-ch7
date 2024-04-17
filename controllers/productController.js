@@ -1,4 +1,3 @@
-const multer = require("multer");
 const { Product, Shop, User } = require("../models");
 const imagekit = require("../lib/imagekit");
 const ApiError = require("../utils/apiError");
@@ -13,11 +12,9 @@ const createProduct = async (req, res, next) => {
     if (files) {
       await Promise.all(
         files.map(async (file) => {
-          // dapatkan extension file nya
           const split = file.originalname.split(".");
           const extension = split[split.length - 1];
 
-          // upload file ke imagekit
           const uploadedImage = await imagekit.upload({
             file: file.buffer,
             fileName: `IMG-${Date.now()}.${extension}`,
@@ -105,7 +102,7 @@ const findProducts = async (req, res, next) => {
       ],
       where: whereCondition,
       order: [["id", "ASC"]],
-      attributes: ["name", "price", "stock", "createdAt", "updatedAt"],
+      attributes: ["id", "name", "price", "stock", "createdAt", "updatedAt"],
       limit: pageSize,
       offset: offset,
     });
@@ -160,12 +157,48 @@ const findProductById = async (req, res, next) => {
 
 const UpdateProduct = async (req, res, next) => {
   const { name, price, stock } = req.body;
+  const files = req.files;
+  let images = [];
+
   try {
-    const product = await Product.update(
+    if (files) {
+      await Promise.all(
+        files.map(async (file) => {
+          const split = file.originalname.split(".");
+          const extension = split[split.length - 1];
+
+          const uploadedImage = await imagekit.upload({
+            file: file.buffer,
+            fileName: `IMG-${Date.now()}.${extension}`,
+          });
+          images.push(uploadedImage.url);
+        })
+      );
+    }
+
+    let shopId;
+    if (req.user.role === "Admin") {
+      if (!req.body.shopId) {
+        return next(
+          new ApiError(
+            "The 'shopId' field is required to create a product. Please provide the 'shopId' in the request body.",
+            400
+          )
+        );
+      }
+      shopId = req.body.shopId;
+    } else {
+      shopId = req.user.shopId;
+    }
+
+    await Product.update(
       {
         name,
         price,
         stock,
+        imageUrl: images,
+        userId: req.user.id,
+        shopId,
       },
       {
         where: {
@@ -176,7 +209,7 @@ const UpdateProduct = async (req, res, next) => {
 
     res.status(200).json({
       status: "Success",
-      message: "sukses update produk",
+      message: "Success update product",
     });
   } catch (err) {
     next(new ApiError(err.message, 400));
@@ -184,27 +217,18 @@ const UpdateProduct = async (req, res, next) => {
 };
 
 const deleteProduct = async (req, res, next) => {
-  const { name, price, stock } = req.body;
+  const id = req.params.id;
+
   try {
-    const product = await Product.findOne({
-      where: {
-        id: req.params.id,
-      },
-    });
-
-    if (!product) {
-      next(new ApiError("Product id tersebut gak ada", 404));
-    }
-
     await Product.destroy({
       where: {
-        id: req.params.id,
+        id,
       },
     });
 
     res.status(200).json({
       status: "Success",
-      message: "sukses delete produk",
+      message: "Success delete product",
     });
   } catch (err) {
     next(new ApiError(err.message, 400));

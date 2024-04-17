@@ -1,12 +1,11 @@
 const ApiError = require("../utils/apiError");
-const { Shop } = require("../models");
 
-const checkId = async (req, res, next) => {
+const checkId = (Model) => async (req, res, next) => {
   try {
-    const shop = await Shop.findByPk(req.params.id);
+    const instance = await Model.findByPk(req.params.id);
 
-    if (!shop) {
-      return next(new ApiError(`shop gak ada`, 404));
+    if (!instance) {
+      return next(new ApiError(`${Model.name} not found`, 404));
     }
 
     next();
