@@ -23,10 +23,6 @@ const register = async (req, res, next) => {
       next(new ApiError("Minimum password must be 8 character", 400));
     }
 
-    if (password !== confirmPassword) {
-      next(new ApiError("password does not match", 400));
-    }
-
     const saltRounds = 10;
     const hashedPassword = bcrypt.hashSync(password, saltRounds);
 
