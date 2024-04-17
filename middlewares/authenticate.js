@@ -21,7 +21,7 @@ module.exports = async (req, res, next) => {
     next();
   } catch (err) {
     if (err.message === "jwt expired") {
-      next(new ApiError("Token expired", 400));
+      return next(new ApiError("Token expired", 400));
     }
     next(new ApiError(err.message, 500));
   }
